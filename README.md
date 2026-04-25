@@ -1,3 +1,4 @@
+
 # RFQBid - British Auction RFQ System 🚀
 
 RFQBid is a premium, real-time British Auction system designed for efficient Request for Quote (RFQ) management. It provides a seamless interface for buyers to monitor live auctions and for suppliers to place competitive bids in a dynamic environment.
@@ -9,10 +10,8 @@ Check out the live application here: **[https://frq-frontend.vercel.app/](https:
 
 ## 📸 Screenshots
 
-*(Add your screenshots here to showcase the premium UI)*
-
 <div align="center">
-  <img src="https://via.placeholder.com/800x450.png?text=RFQBid+Dashboard+Preview" alt="Dashboard Preview" width="800">
+  <img src="https://github.com/user-attachments/assets/e43f61f3-80f5-4477-8483-8fb08f910fa6" />
 </div>
 
 ---
