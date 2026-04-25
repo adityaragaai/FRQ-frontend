@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, IndianRupee, Loader2 } from 'lucide-react';
+import { Send, IndianRupee, Loader2, Gavel } from 'lucide-react';
 import { placeBid } from '../services/api';
 
 const PlaceBidForm = ({ activeAuction, onBidSuccess }) => {
@@ -57,8 +57,14 @@ const PlaceBidForm = ({ activeAuction, onBidSuccess }) => {
   const isClosed = activeAuction?.status !== 'ACTIVE';
 
   return (
-    <div className="card">
-      <h3 className="text-lg font-bold text-slate-800 mb-5">Place Your Bid</h3>
+    <div id="place-your-bid" className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-md border-l-4 border-l-blue-600">
+      <div className="p-6 md:p-8">
+        <div className="flex items-center space-x-3 mb-8">
+          <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
+            <Gavel className="w-5 h-5 text-blue-600" />
+          </div>
+          <h3 className="text-xl font-bold text-slate-900 tracking-tight">Place Your Bid</h3>
+        </div>
       
       {error && <div className="mb-4 p-3 bg-red-50 text-red-600 text-sm rounded-lg border border-red-100">{error}</div>}
       {success && <div className="mb-4 p-3 bg-emerald-50 text-emerald-600 text-sm rounded-lg border border-emerald-100">Bid successfully placed!</div>}
@@ -129,6 +135,7 @@ const PlaceBidForm = ({ activeAuction, onBidSuccess }) => {
           </button>
         </div>
       </form>
+      </div>
     </div>
   );
 };

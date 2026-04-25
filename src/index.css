@@ -5,6 +5,8 @@
 @layer base {
   body {
     @apply text-slate-800 bg-slate-50;
+    font-family: 'Outfit', sans-serif;
+    scroll-behavior: smooth;
   }
 }
 

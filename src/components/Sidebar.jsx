@@ -1,93 +1,127 @@
 import React from 'react';
-import { LayoutDashboard, PlusCircle, List, History, Users, BarChart3, Settings, LogOut, HelpCircle, Gavel } from 'lucide-react';
+import { 
+  LayoutDashboard, 
+  PlusCircle, 
+  List, 
+  Settings, 
+  Gavel, 
+  Lock,
+  History,
+  Users,
+  BarChart3
+} from 'lucide-react';
 
-const Sidebar = () => {
+const Sidebar = ({ isCollapsed }) => {
   return (
-    <div className="h-full w-64 bg-[#0A1128] text-slate-300 flex flex-col font-sans">
-      {/* Logo Area */}
-      <div className="h-16 flex items-center px-6 border-b border-slate-800/50">
-        <Gavel className="w-6 h-6 text-blue-500 mr-3" />
-        <span className="text-xl font-bold text-white tracking-wide">RFQBid</span>
-      </div>
-
+    <div className={`h-full flex flex-col font-sans transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'}`}>
+      
       {/* Navigation */}
-      <div className="flex-1 overflow-y-auto py-6 px-4 space-y-8 custom-scrollbar">
+      <div className={`flex-1 overflow-y-auto py-8 space-y-8 custom-scrollbar transition-all duration-300 ${isCollapsed ? 'px-2' : 'px-6'}`}>
         
-        {/* Section 1 */}
-        <div className="space-y-1">
-          <p className="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Auctions</p>
-          <a href="#" className="flex items-center px-3 py-2.5 bg-blue-600/10 text-blue-500 rounded-lg group transition-colors">
-            <LayoutDashboard className="w-5 h-5 mr-3" />
-            <span className="font-medium">Dashboard</span>
+        {/* Auctions Section (Referred to as Scheduling in the image) */}
+        <div className="space-y-2">
+          {!isCollapsed && <p className="px-3 text-[11px] font-bold text-blue-500 uppercase tracking-[0.2em] mb-4">Auctions</p>}
+          <a href="#" className={`flex items-center py-3 rounded-2xl group transition-all duration-300 ${isCollapsed ? 'justify-center bg-blue-50 text-blue-600 shadow-sm' : 'px-4 bg-blue-50 text-blue-600 shadow-sm'}`}>
+            <LayoutDashboard className="w-5 h-5" />
+            {!isCollapsed && <span className="font-semibold ml-3 whitespace-nowrap">Dashboard</span>}
           </a>
-          <a href="#" className="flex items-center px-3 py-2.5 hover:bg-white/5 hover:text-white rounded-lg group transition-colors">
-            <PlusCircle className="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" />
-            <span className="font-medium">Create RFQ</span>
+          <a href="#place-your-bid" className={`flex items-center py-3 rounded-2xl group transition-all duration-300 hover:bg-slate-50 hover:text-slate-900 ${isCollapsed ? 'justify-center text-slate-400' : 'px-4 text-slate-500 justify-between'}`}>
+            <div className="flex items-center">
+              <Gavel className="w-5 h-5 transition-colors group-hover:text-blue-500" />
+              {!isCollapsed && <span className="font-medium ml-3 whitespace-nowrap">Place Your Bid</span>}
+            </div>
           </a>
-          <a href="#" className="flex items-center px-3 py-2.5 hover:bg-white/5 hover:text-white rounded-lg group transition-colors">
-            <List className="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" />
-            <span className="font-medium">All RFQs</span>
-          </a>
-        </div>
-
-        {/* Section 2 */}
-        <div className="space-y-1">
-          <p className="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Bids</p>
-          <a href="#" className="flex items-center px-3 py-2.5 hover:bg-white/5 hover:text-white rounded-lg group transition-colors">
-            <Gavel className="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" />
-            <span className="font-medium">My Bids</span>
-          </a>
-          <a href="#" className="flex items-center px-3 py-2.5 hover:bg-white/5 hover:text-white rounded-lg group transition-colors">
-            <History className="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" />
-            <span className="font-medium">Bid History</span>
+          <a href="#" className={`flex items-center py-3 rounded-2xl group transition-all duration-300 hover:bg-slate-50 hover:text-slate-900 ${isCollapsed ? 'justify-center text-slate-400' : 'px-4 text-slate-500 justify-between'}`}>
+            <div className="flex items-center">
+              <PlusCircle className="w-5 h-5 transition-colors group-hover:text-blue-500" />
+              {!isCollapsed && <span className="font-medium ml-3 whitespace-nowrap">Create RFQ</span>}
+            </div>
+            {!isCollapsed && (
+              <div className="w-6 h-6 bg-blue-50 rounded-full flex items-center justify-center border border-blue-100 opacity-60">
+                <Lock className="w-3 h-3 text-blue-500" />
+              </div>
+            )}
           </a>
         </div>
 
-        {/* Section 3 */}
-        <div className="space-y-1">
-          <p className="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Network</p>
-          <a href="#" className="flex items-center px-3 py-2.5 hover:bg-white/5 hover:text-white rounded-lg group transition-colors">
-            <Users className="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" />
-            <span className="font-medium">Suppliers</span>
+        {/* Bids Section */}
+        <div className="space-y-2">
+          {!isCollapsed && <p className="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">Bids</p>}
+          <a href="#" className={`flex items-center py-3 rounded-2xl group transition-all duration-300 hover:bg-slate-50 hover:text-slate-900 ${isCollapsed ? 'justify-center text-slate-400' : 'px-4 text-slate-500 justify-between'}`}>
+            <div className="flex items-center">
+              <Gavel className="w-5 h-5 transition-colors group-hover:text-blue-500" />
+              {!isCollapsed && <span className="font-medium ml-3 whitespace-nowrap">My Bids</span>}
+            </div>
+            {!isCollapsed && (
+              <div className="w-6 h-6 bg-blue-50 rounded-full flex items-center justify-center border border-blue-100 opacity-60">
+                <Lock className="w-3 h-3 text-blue-500" />
+              </div>
+            )}
+          </a>
+          <a href="#" className={`flex items-center py-3 rounded-2xl group transition-all duration-300 hover:bg-slate-50 hover:text-slate-900 ${isCollapsed ? 'justify-center text-slate-400' : 'px-4 text-slate-500 justify-between'}`}>
+            <div className="flex items-center">
+              <History className="w-5 h-5 transition-colors group-hover:text-blue-500" />
+              {!isCollapsed && <span className="font-medium ml-3 whitespace-nowrap">Bid History</span>}
+            </div>
+            {!isCollapsed && (
+              <div className="w-6 h-6 bg-blue-50 rounded-full flex items-center justify-center border border-blue-100 opacity-60">
+                <Lock className="w-3 h-3 text-blue-500" />
+              </div>
+            )}
           </a>
         </div>
 
-        {/* Section 4 */}
-        <div className="space-y-1">
-          <p className="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Reports</p>
-          <a href="#" className="flex items-center px-3 py-2.5 hover:bg-white/5 hover:text-white rounded-lg group transition-colors">
-            <BarChart3 className="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" />
-            <span className="font-medium">Reports & Analytics</span>
+        {/* Network Section */}
+        <div className="space-y-2">
+          {!isCollapsed && <p className="px-3 text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">Network</p>}
+          <a href="#" className={`flex items-center py-3 rounded-2xl group transition-all duration-300 hover:bg-slate-50 hover:text-slate-900 ${isCollapsed ? 'justify-center text-slate-400' : 'px-4 text-slate-500 justify-between'}`}>
+            <div className="flex items-center">
+              <Users className="w-5 h-5 transition-colors group-hover:text-blue-500" />
+              {!isCollapsed && <span className="font-medium ml-3 whitespace-nowrap">Suppliers</span>}
+            </div>
+            {!isCollapsed && (
+              <div className="w-6 h-6 bg-blue-50 rounded-full flex items-center justify-center border border-blue-100 opacity-60">
+                <Lock className="w-3 h-3 text-blue-500" />
+              </div>
+            )}
           </a>
         </div>
 
       </div>
 
       {/* Bottom Actions */}
-      <div className="p-4 border-t border-slate-800/50 space-y-1">
-        <a href="#" className="flex items-center px-3 py-2.5 hover:bg-white/5 hover:text-white rounded-lg group transition-colors">
-          <Settings className="w-5 h-5 mr-3 text-slate-400 group-hover:text-white" />
-          <span className="font-medium">Settings</span>
-        </a>
-        <a href="#" className="flex items-center px-3 py-2.5 hover:bg-white/5 text-red-400 rounded-lg group transition-colors">
-          <LogOut className="w-5 h-5 mr-3" />
-          <span className="font-medium">Logout</span>
-        </a>
-      </div>
-
-      {/* Help widget */}
-      <div className="p-4">
-        <div className="bg-[#131d38] rounded-xl p-4 flex items-start space-x-3">
-          <div className="bg-blue-600/20 p-2 rounded-lg mt-0.5">
-            <HelpCircle className="w-5 h-5 text-blue-500" />
+      <div className={`p-6 border-t border-slate-50 transition-all duration-300 ${isCollapsed ? 'flex flex-col items-center' : ''}`}>
+        <a href="#" className={`flex items-center hover:bg-slate-50 hover:text-slate-900 rounded-2xl group transition-all duration-300 mb-6 ${isCollapsed ? 'p-3 justify-center text-slate-400' : 'px-4 py-3 justify-between w-full text-slate-500'}`}>
+          <div className="flex items-center">
+            <Settings className="w-5 h-5 transition-colors group-hover:text-blue-500" />
+            {!isCollapsed && <span className="font-medium ml-3 whitespace-nowrap">Settings</span>}
           </div>
-          <div>
-            <p className="text-sm font-medium text-white">Need Help?</p>
-            <p className="text-xs text-slate-400 mt-1">Check our docs or contact support.</p>
+          {/* Lock Badge */}
+          {!isCollapsed && (
+            <div className="w-6 h-6 bg-blue-50 rounded-full flex items-center justify-center border border-blue-100">
+              <Lock className="w-3 h-3 text-blue-500" />
+            </div>
+          )}
+        </a>
+
+        {/* Powered By Section */}
+        <div className={`pt-6 border-t border-slate-50 flex flex-col items-center justify-center transition-all duration-300`}>
+          {!isCollapsed && <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 text-center">Powered by</p>}
+          <div className="flex items-center opacity-70 hover:opacity-100 transition-opacity justify-center">
+            <svg width={isCollapsed ? "20" : "100"} height="20" viewBox={isCollapsed ? "0 0 20 20" : "0 0 100 20"} fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="4" width="8" height="2" rx="1" fill="#3B82F6" />
+              <rect x="0" y="8" width="12" height="2" rx="1" fill="#3B82F6" />
+              <rect x="0" y="12" width="8" height="2" rx="1" fill="#3B82F6" />
+              {!isCollapsed && (
+                <>
+                  <text x="16" y="15" fill="#3B82F6" style={{ font: 'bold 14px Outfit, sans-serif' }}>GO</text>
+                  <text x="38" y="15" fill="#0F172A" style={{ font: 'bold 14px Outfit, sans-serif' }}>COMET</text>
+                </>
+              )}
+            </svg>
           </div>
         </div>
       </div>
-
     </div>
   );
 };
