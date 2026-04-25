@@ -8,34 +8,34 @@ const RFQDetails = ({ activeAuction, bids = [] }) => {
     <div className="card">
       <div className="flex justify-between items-start mb-6">
         <div>
-          <h2 className="text-xl font-bold text-slate-800">{activeAuction.name}</h2>
+          <h2 className="text-xl font-bold text-slate-800 tracking-tight">{activeAuction.name}</h2>
           <div className="flex items-center space-x-4 mt-1">
-            <p className="text-sm text-slate-500">ID: {activeAuction.rfqId}</p>
+            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">ID: {activeAuction.rfqId}</p>
             {activeAuction.pickupDate && (
-              <p className="text-sm text-slate-500 border-l border-slate-300 pl-4">
-                Pickup Date: <span className="font-semibold text-slate-700">{new Date(activeAuction.pickupDate).toLocaleDateString('en-GB')}</span>
+              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest border-l border-slate-200 pl-4">
+                Pickup: <span className="text-slate-600 font-semibold">{new Date(activeAuction.pickupDate).toLocaleDateString('en-GB')}</span>
               </p>
             )}
           </div>
         </div>
         <div className="flex space-x-2">
-          <button className="btn-secondary hidden sm:inline-flex">
+          <button className="btn-secondary hidden sm:inline-flex font-bold uppercase text-[10px] tracking-widest">
             <Download className="w-4 h-4 mr-2" />
-            Download RFQ
+            Download
           </button>
-          <button className="btn-secondary">
+          <button className="btn-secondary font-bold uppercase text-[10px] tracking-widest">
             <ExternalLink className="w-4 h-4 mr-2" />
-            Full Details
+            Details
           </button>
         </div>
       </div>
 
       <div className="border-t border-slate-100 pt-6">
-        <h3 className="text-lg font-semibold text-slate-800 mb-4">Current Bids Ranking</h3>
+        <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-4">Current Bids Ranking</h3>
         <div className="overflow-x-auto rounded-xl border border-slate-200">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-200 text-xs uppercase tracking-wider text-slate-600 font-semibold">
+              <tr className="bg-slate-50 border-b border-slate-200 text-[10px] uppercase tracking-[0.15em] text-slate-600 font-bold">
                 <th className="p-4 pl-5">Rank</th>
                 <th className="p-4">Supplier Name</th>
                 <th className="p-4">Total Price</th>
@@ -46,7 +46,7 @@ const RFQDetails = ({ activeAuction, bids = [] }) => {
               {bids.map((bid) => (
                 <tr 
                   key={bid._id} 
-                  className={`hover:bg-slate-50/80 transition-colors ${bid.rank === 'L1' ? 'bg-emerald-50/50' : ''}`}
+                  className={`hover:bg-slate-50/80 transition-colors ${bid.rank === 'L1' ? 'bg-emerald-50/30' : ''}`}
                 >
                   <td className="p-4 pl-5">
                     <span className={`inline-flex items-center justify-center w-8 h-8 rounded-full font-bold ${
@@ -55,18 +55,18 @@ const RFQDetails = ({ activeAuction, bids = [] }) => {
                       {bid.rank}
                     </span>
                   </td>
-                  <td className="p-4 font-medium text-slate-800">
+                  <td className="p-4 font-semibold text-slate-800">
                     {bid.supplierName}
                     {bid.rank === 'L1' && (
-                      <span className="ml-2 text-[10px] uppercase font-bold tracking-wider text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded">
+                      <span className="ml-2 text-[10px] uppercase font-bold tracking-widest text-emerald-600 bg-emerald-100/50 px-2 py-0.5 rounded">
                         Lowest
                       </span>
                     )}
                   </td>
-                  <td className={`p-4 font-semibold ${bid.rank === 'L1' ? 'text-emerald-700' : 'text-slate-800'}`}>
+                  <td className={`p-4 font-bold ${bid.rank === 'L1' ? 'text-emerald-700' : 'text-slate-700'}`}>
                     ₹ {bid.totalPrice.toLocaleString('en-IN')}
                   </td>
-                  <td className="p-4 pr-5 text-slate-500">
+                  <td className="p-4 pr-5 text-slate-500 font-medium">
                     {new Date(bid.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                   </td>
                 </tr>

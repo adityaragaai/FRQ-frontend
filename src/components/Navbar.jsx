@@ -35,8 +35,8 @@ const Navbar = ({ onMenuClick }) => {
             <User className="w-5 h-5" />
           </div>
           <div className="hidden sm:block">
-            <p className="text-sm font-bold text-slate-800 leading-tight">John Doe</p>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Buyer</p>
+            <p className="text-sm font-black text-slate-800 leading-tight">Aditya Gupta</p>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Buyer Admin</p>
           </div>
         </div>
 

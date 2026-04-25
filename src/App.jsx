@@ -158,7 +158,7 @@ function App() {
         </div>
 
         <main className="flex-1 overflow-y-auto custom-scrollbar rounded-[32px] bg-white border border-slate-100 shadow-sm p-4 md:p-8">
-          <div className="max-w-[1600px] mx-auto space-y-6">
+          <div id="dashboard-top" className="max-w-[1600px] mx-auto space-y-6">
             
             <DashboardStats rfqs={rfqs} />
 
@@ -174,7 +174,6 @@ function App() {
                 {activeAuction && (
                   <div className="grid grid-cols-1 gap-6">
                     <div className="pt-4 border-t border-slate-200">
-                      <h2 className="text-xl font-bold text-slate-800 mb-6">Auction Management</h2>
                       <div className="space-y-6">
                         <RFQDetails activeAuction={activeAuction} bids={bids} />
                         
