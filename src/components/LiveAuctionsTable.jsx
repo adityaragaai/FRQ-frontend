@@ -34,7 +34,7 @@ const LiveAuctionsTable = ({ auctions, activeId, onSelectAuction }) => {
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-50 border-b border-slate-100 text-xs uppercase tracking-wider text-slate-500 font-semibold">
+            <tr className="bg-slate-50 border-b border-slate-100 text-[10px] uppercase tracking-[0.15em] text-slate-500 font-bold">
               <th className="p-4 pl-5">RFQ ID</th>
               <th className="p-4">RFQ Name</th>
               <th className="p-4">
@@ -63,17 +63,17 @@ const LiveAuctionsTable = ({ auctions, activeId, onSelectAuction }) => {
                     {auction.rfqId}
                     {isActiveRow && <span className="ml-2 w-2 h-2 rounded-full bg-blue-500 inline-block"></span>}
                   </td>
-                  <td className="p-4 text-slate-700 font-medium">
+                  <td className="p-4 text-slate-800 font-medium">
                     {auction.name}
                   </td>
-                  <td className={`p-4 font-mono font-medium ${isClosed ? 'text-slate-400' : isEndingSoon ? 'text-red-500 animate-pulse' : 'text-slate-600'}`}>
+                  <td className={`p-4 font-mono font-semibold ${isClosed ? 'text-slate-400' : isEndingSoon ? 'text-red-500 animate-pulse' : 'text-slate-700'}`}>
                     {isClosed ? 'CLOSED' : formatTime(timeLeftSecs)}
                   </td>
                   <td className="p-4 pr-5">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider border ${
                       auction.status === 'ACTIVE' 
-                        ? 'bg-emerald-100 text-emerald-700 border-emerald-200' 
-                        : 'bg-slate-100 text-slate-600 border-slate-200'
+                        ? 'bg-emerald-50 text-emerald-700 border-emerald-100' 
+                        : 'bg-slate-50 text-slate-600 border-slate-100'
                     }`}>
                       {auction.status}
                     </span>
