@@ -2,7 +2,7 @@ import React from 'react';
 import { Gavel, CheckCircle2, Users, IndianRupee } from 'lucide-react';
 
 const StatCard = ({ title, value, icon: Icon, colorClass, bgColorClass, subtitle, watermark: WatermarkIcon }) => (
-  <div className="bg-white rounded-[32px] shadow-sm border border-slate-100 p-5 relative overflow-hidden group hover:shadow-lg hover:-translate-y-1 transition-all duration-500 cursor-default">
+  <div className="bg-white rounded-[24px] md:rounded-[32px] shadow-sm border border-slate-100 p-4 md:p-5 relative overflow-hidden group hover:shadow-lg hover:-translate-y-1 transition-all duration-500 cursor-default">
     {/* Top Accent Line */}
     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500/20 via-blue-500 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
     
@@ -42,7 +42,7 @@ const DashboardStats = ({ rfqs }) => {
   const totalSavings = '₹ 12.5 Cr';
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
       <StatCard 
         title="Active Auctions" 
         value={activeAuctions} 

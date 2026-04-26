@@ -6,19 +6,19 @@ const RFQDetails = ({ activeAuction, bids = [] }) => {
 
   return (
     <div className="card">
-      <div className="flex justify-between items-start mb-6">
-        <div>
-          <h2 className="text-xl font-bold text-slate-800 tracking-tight">{activeAuction.name}</h2>
-          <div className="flex items-center space-x-4 mt-1">
-            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">ID: {activeAuction.rfqId}</p>
+      <div className="flex flex-wrap justify-between items-start gap-3 mb-6">
+        <div className="min-w-0">
+          <h2 className="text-lg md:text-xl font-bold text-slate-800 tracking-tight truncate">{activeAuction.name}</h2>
+          <div className="flex flex-wrap items-center gap-2 md:gap-4 mt-1">
+            <p className="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-widest">ID: {activeAuction.rfqId}</p>
             {activeAuction.pickupDate && (
-              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest border-l border-slate-200 pl-4">
+              <p className="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-widest border-l border-slate-200 pl-2 md:pl-4">
                 Pickup: <span className="text-slate-600 font-semibold">{new Date(activeAuction.pickupDate).toLocaleDateString('en-GB')}</span>
               </p>
             )}
           </div>
         </div>
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 flex-shrink-0">
           <button className="btn-secondary hidden sm:inline-flex font-bold uppercase text-[10px] tracking-widest">
             <Download className="w-4 h-4 mr-2" />
             Download

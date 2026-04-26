@@ -129,7 +129,7 @@ const PlaceBidForm = ({ activeAuction, onBidSuccess }) => {
         </div>
 
         <div className="pt-2">
-          <button type="submit" className={`btn-primary w-full md:w-auto px-8 font-bold uppercase tracking-widest ${isClosed ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={isClosed || loading}>
+          <button type="submit" className={`btn-primary w-full font-bold uppercase tracking-widest ${isClosed ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={isClosed || loading}>
             {loading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Send className="w-4 h-4 mr-2" />}
             {isClosed ? 'Auction Closed' : 'Submit Bid'}
           </button>
