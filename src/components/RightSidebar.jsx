@@ -18,7 +18,7 @@ const RightSidebar = ({ activeAuction, activities }) => {
     return () => clearInterval(timer);
   }, []);
 
-  if (!activeAuction) return <div className="w-full xl:w-80 flex-shrink-0 space-y-4 md:space-y-6"></div>;
+  if (!activeAuction) return <div className="w-full xl:w-96 flex-shrink-0 space-y-4 md:space-y-6"></div>;
 
   const closeTime = new Date(activeAuction.bidCloseTime);
   const timeLeftSecs = Math.max(0, Math.floor((closeTime - now) / 1000));
@@ -33,15 +33,27 @@ const RightSidebar = ({ activeAuction, activities }) => {
   const isClosed = activeAuction.status !== 'ACTIVE';
 
   return (
-    <div className="w-full xl:w-80 flex-shrink-0 space-y-4 md:space-y-6">
+    <div className="w-full xl:w-96 flex-shrink-0 space-y-4 md:space-y-6">
       
       {/* Ending Soon / Active Card */}
       <div className={`rounded-2xl p-6 text-white shadow-lg relative overflow-hidden ${isClosed ? 'bg-slate-800' : 'bg-[#0f172a]'}`}>
         {!isClosed && <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/20 blur-3xl rounded-full translate-x-10 -translate-y-10"></div>}
         
-        <h2 className="text-sm font-semibold text-slate-300 mb-5 relative z-10">
-          {isClosed ? 'Auction Closed' : 'Auction Status'}
-        </h2>
+        <div className="flex items-center justify-between mb-5 relative z-10">
+          <h2 className="text-sm font-semibold text-slate-300">
+            {isClosed ? 'Auction Closed' : 'Auction Status'}
+          </h2>
+          {/* LIVE indicator */}
+          {!isClosed && (
+            <div className="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span className="text-[10px] font-bold tracking-widest uppercase text-emerald-400">Live</span>
+            </div>
+          )}
+        </div>
         
         <div className="flex justify-between items-center mb-6 relative z-10">
           <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50 flex-1 mr-4">
