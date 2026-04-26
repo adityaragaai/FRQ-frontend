@@ -16,7 +16,7 @@ const Sidebar = ({ isCollapsed }) => {
     <div className={`h-full flex flex-col font-sans transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'}`}>
       
       {/* Navigation */}
-      <div className={`flex-1 overflow-hidden py-8 space-y-8 transition-all duration-300 ${isCollapsed ? 'px-2' : 'px-6'}`}>
+      <div className={`flex-1 overflow-y-auto py-5 space-y-5 transition-all duration-300 custom-scrollbar ${isCollapsed ? 'px-2' : 'px-6'}`}>
         
         {/* Auctions Section */}
         <div className="space-y-1">
