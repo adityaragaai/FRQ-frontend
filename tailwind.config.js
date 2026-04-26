@@ -14,7 +14,7 @@ export default {
         'brand-primary-hover': '#2563eb', // blue-600
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Outfit', 'sans-serif'],
       }
     },
   },
