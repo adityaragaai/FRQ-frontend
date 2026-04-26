@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import DashboardStats from './components/DashboardStats';
@@ -7,6 +7,7 @@ import RightSidebar from './components/RightSidebar';
 import RFQDetails from './components/RFQDetails';
 import PlaceBidForm from './components/PlaceBidForm';
 import AuctionConfig from './components/AuctionConfig';
+import SplashScreen from './components/SplashScreen';
 
 import { fetchRfqs, fetchRfqById, fetchBids, fetchActivityLogs } from './services/api';
 import { ChevronLeft, Menu } from 'lucide-react';
@@ -18,6 +19,9 @@ function App() {
   const [bids, setBids] = useState([]);
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showSplash, setShowSplash] = useState(true);
+
+  const handleSplashDone = useCallback(() => setShowSplash(false), []);
 
   // Poll for all RFQs every 10 seconds to keep the table and stats fresh
   useEffect(() => {
@@ -98,12 +102,18 @@ function App() {
   };
 
 
-  if (loading) {
-    return <div className="flex h-screen items-center justify-center bg-brand-light text-slate-500 font-medium">Loading Dashboard...</div>;
-  }
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-[#F8FAFC] font-sans p-4 md:p-6 gap-6">
+    <>
+      {showSplash && <SplashScreen onDone={handleSplashDone} />}
+      <div
+        className="flex flex-col h-screen overflow-hidden bg-[#F8FAFC] font-sans p-4 md:p-6 gap-6"
+        style={{
+          opacity: showSplash ? 0 : 1,
+          transform: showSplash ? 'translateY(12px)' : 'translateY(0)',
+          transition: 'opacity 0.5s ease 0.05s, transform 0.5s ease 0.05s',
+        }}
+      >
       
       {/* Unified Top Header - Logo & Navbar combined */}
       <header className="bg-white rounded-2xl shadow-sm border border-slate-100 h-20 flex items-center px-6 md:px-10 flex-shrink-0 overflow-hidden">
@@ -144,13 +154,21 @@ function App() {
 
         {/* Sidebar - Floating Card */}
         <div className={`
-          bg-white rounded-[32px] shadow-sm border border-slate-100 relative transition-all duration-300 flex flex-col overflow-visible
+          rounded-[32px] shadow-xl relative transition-all duration-300 flex flex-col overflow-visible
           ${window.innerWidth < 768 && !isSidebarOpen ? 'fixed inset-y-4 left-4 z-50 -translate-x-full' : 'relative translate-x-0'}
-        `} style={{ width: isSidebarOpen ? '256px' : '80px' }}>
+        `} style={{
+          width: isSidebarOpen ? '256px' : '80px',
+          background: 'linear-gradient(160deg, #0F172A 0%, #1E293B 60%, #0F172A 100%)',
+          border: '1px solid rgba(59,130,246,0.15)',
+          boxShadow: 'none',
+        }}>
           {/* Floating Edge Toggle Button */}
           <button 
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="absolute -right-4 top-1/2 -translate-y-1/2 z-[60] w-9 h-9 bg-white border border-slate-100 rounded-full flex items-center justify-center text-slate-400 hover:text-blue-600 hover:border-blue-100 transition-all duration-300 shadow-md"
+            className="absolute -right-4 top-1/2 -translate-y-1/2 z-[60] w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg"
+            style={{ background: '#1E293B', border: '1px solid rgba(59,130,246,0.25)', color: '#94A3B8' }}
+            onMouseEnter={e => { e.currentTarget.style.color='#3B82F6'; e.currentTarget.style.borderColor='rgba(59,130,246,0.6)'; }}
+            onMouseLeave={e => { e.currentTarget.style.color='#94A3B8'; e.currentTarget.style.borderColor='rgba(59,130,246,0.25)'; }}
           >
             {isSidebarOpen ? <ChevronLeft className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4 rotate-180" />}
           </button>
@@ -195,6 +213,7 @@ function App() {
         </main>
       </div>
     </div>
+    </>
   );
 }
 
