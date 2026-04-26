@@ -9,7 +9,7 @@ const StatCard = ({ title, value, icon: Icon, colorClass, bgColorClass, subtitle
     <div className="relative z-10">
       <div className="flex items-center space-x-2 mb-3">
         <Icon className={`w-4 h-4 ${colorClass} opacity-80`} />
-        <span className={`text-[10px] font-semibold uppercase tracking-[0.1em] ${colorClass}`}>{title}</span>
+        <span className={`text-[12px] font-semibold uppercase tracking-[0.1em] ${colorClass}`}>{title}</span>
       </div>
 
       <div className="mb-1">
