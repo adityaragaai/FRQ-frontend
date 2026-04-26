@@ -18,7 +18,7 @@ const RightSidebar = ({ activeAuction, activities }) => {
     return () => clearInterval(timer);
   }, []);
 
-  if (!activeAuction) return <div className="w-full xl:w-96 flex-shrink-0 space-y-6"></div>;
+  if (!activeAuction) return <div className="w-full xl:w-80 flex-shrink-0 space-y-4 md:space-y-6"></div>;
 
   const closeTime = new Date(activeAuction.bidCloseTime);
   const timeLeftSecs = Math.max(0, Math.floor((closeTime - now) / 1000));
@@ -33,7 +33,7 @@ const RightSidebar = ({ activeAuction, activities }) => {
   const isClosed = activeAuction.status !== 'ACTIVE';
 
   return (
-    <div className="w-full xl:w-96 flex-shrink-0 space-y-6">
+    <div className="w-full xl:w-80 flex-shrink-0 space-y-4 md:space-y-6">
       
       {/* Ending Soon / Active Card */}
       <div className={`rounded-2xl p-6 text-white shadow-lg relative overflow-hidden ${isClosed ? 'bg-slate-800' : 'bg-[#0f172a]'}`}>
