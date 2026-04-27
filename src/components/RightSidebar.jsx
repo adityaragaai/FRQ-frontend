@@ -2,12 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { BellRing } from 'lucide-react';
 import ActivityLog from './ActivityLog';
 
-const formatTime = (seconds) => {
-  if (seconds <= 0) return '00:00:00';
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  const s = seconds % 60;
-  return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+const formatTime = (totalSeconds) => {
+  if (totalSeconds <= 0) return '00:00:00';
+  
+  const d = Math.floor(totalSeconds / (3600 * 24));
+  const h = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = Math.floor(totalSeconds % 60);
+
+  const hh = h.toString().padStart(2, '0');
+  const mm = m.toString().padStart(2, '0');
+  const ss = s.toString().padStart(2, '0');
+
+  if (d > 0) {
+    const dd = d.toString().padStart(2, '0');
+    return `${dd}:${hh}:${mm}:${ss}`;
+  }
+  
+  return `${hh}:${mm}:${ss}`;
 };
 
 const RightSidebar = ({ activeAuction, activities }) => {
@@ -24,7 +36,7 @@ const RightSidebar = ({ activeAuction, activities }) => {
   const timeLeftSecs = Math.max(0, Math.floor((closeTime - now) / 1000));
   
   // Calculate SVG circle properties
-  const radius = 54;
+  const radius = 72;
   const circumference = 2 * Math.PI * radius;
   // Assume a 2-hour max for percentage calculation (7200 seconds)
   const strokeDashoffset = Math.max(0, circumference - (timeLeftSecs / 7200) * circumference);
@@ -36,10 +48,10 @@ const RightSidebar = ({ activeAuction, activities }) => {
     <div className="w-full xl:w-96 flex-shrink-0 space-y-4 md:space-y-6">
       
       {/* Ending Soon / Active Card */}
-      <div className={`rounded-2xl p-6 text-white shadow-lg relative overflow-hidden ${isClosed ? 'bg-slate-800' : 'bg-[#0f172a]'}`}>
+      <div className={`rounded-2xl p-4 text-white shadow-lg relative overflow-hidden ${isClosed ? 'bg-slate-800' : 'bg-[#0f172a]'}`}>
         {!isClosed && <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/20 blur-3xl rounded-full translate-x-10 -translate-y-10"></div>}
         
-        <div className="flex items-center justify-between mb-5 relative z-10">
+        <div className="flex items-center justify-between mb-3 relative z-10">
           <h2 className="text-sm font-semibold text-slate-300">
             {isClosed ? 'Auction Closed' : 'Auction Status'}
           </h2>
@@ -55,7 +67,7 @@ const RightSidebar = ({ activeAuction, activities }) => {
           )}
         </div>
         
-        <div className="flex justify-between items-center mb-6 relative z-10">
+        <div className="flex justify-between items-center mb-3 relative z-10">
           <div className="bg-slate-800/80 rounded-xl p-4 border border-slate-700/50 flex-1 mr-4">
             {!isClosed && isEndingSoon && (
               <div className="flex items-center text-red-400 text-xs font-bold mb-2">
@@ -68,20 +80,20 @@ const RightSidebar = ({ activeAuction, activities }) => {
           </div>
           
           {/* Circular Timer */}
-          <div className="relative w-32 h-32 flex-shrink-0 flex items-center justify-center">
-            <svg className="w-full h-full -rotate-90 transform" viewBox="0 0 120 120">
+          <div className="relative w-40 h-40 flex-shrink-0 flex items-center justify-center">
+            <svg className="w-full h-full -rotate-90 transform" viewBox="0 0 160 160">
               <circle 
-                cx="60" cy="60" r={radius} 
+                cx="80" cy="80" r={radius} 
                 stroke="currentColor" 
-                strokeWidth="6" 
+                strokeWidth="8" 
                 fill="transparent" 
                 className="text-slate-800" 
               />
               {!isClosed && (
                 <circle 
-                  cx="60" cy="60" r={radius} 
+                  cx="80" cy="80" r={radius} 
                   stroke="currentColor" 
-                  strokeWidth="6" 
+                  strokeWidth="8" 
                   fill="transparent" 
                   strokeDasharray={circumference}
                   strokeDashoffset={strokeDashoffset}
@@ -91,18 +103,23 @@ const RightSidebar = ({ activeAuction, activities }) => {
               )}
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className={`font-mono font-bold tracking-tighter ${isClosed ? 'text-slate-400 text-xl' : (formatTime(timeLeftSecs).length > 8 ? 'text-base' : 'text-xl')}`}>
+              <span className={`font-mono font-bold tracking-tighter ${isClosed ? 'text-slate-400 text-2xl' : (formatTime(timeLeftSecs).length > 8 ? 'text-lg' : 'text-2xl')}`}>
                 {isClosed ? '00:00:00' : formatTime(timeLeftSecs)}
               </span>
               <span className="text-[10px] text-slate-400 uppercase tracking-wider mt-0.5">
                 {isClosed ? 'Closed' : 'Time Left'}
               </span>
+              {!isClosed && (
+                <span className="text-[8px] text-slate-500 font-medium tracking-widest uppercase -mt-0.5 opacity-80">
+                  (DD:HH:MM:SS)
+                </span>
+              )}
             </div>
           </div>
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-2 gap-4 border-t border-slate-700/50 pt-4 mt-2 relative z-10">
+        <div className="grid grid-cols-2 gap-4 border-t border-slate-700/50 pt-3 mt-1 relative z-10">
           <div>
             <p className="text-[10px] text-slate-400 uppercase tracking-wider mb-1">Lowest Bid</p>
             <p className="font-semibold text-sm">
