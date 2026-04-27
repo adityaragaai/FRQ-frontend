@@ -2,12 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { Info } from 'lucide-react';
 import Skeleton from './Skeleton';
 
-const formatTime = (seconds) => {
-  if (seconds <= 0) return '00:00:00';
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  const s = seconds % 60;
-  return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+const formatTime = (totalSeconds) => {
+  if (totalSeconds <= 0) return '00:00:00';
+  
+  const d = Math.floor(totalSeconds / (3600 * 24));
+  const h = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = Math.floor(totalSeconds % 60);
+
+  const hh = h.toString().padStart(2, '0');
+  const mm = m.toString().padStart(2, '0');
+  const ss = s.toString().padStart(2, '0');
+
+  if (d > 0) {
+    const dd = d.toString().padStart(2, '0');
+    return `${dd}:${hh}:${mm}:${ss}`;
+  }
+  
+  return `${hh}:${mm}:${ss}`;
 };
 
 const LiveAuctionsTable = ({ auctions, activeId, onSelectAuction, loading }) => {
@@ -43,7 +55,7 @@ const LiveAuctionsTable = ({ auctions, activeId, onSelectAuction, loading }) => 
               <th className="p-4">RFQ Name</th>
               <th className="p-4">
                 <div className="flex items-center">
-                  Close Time <Info className="w-3.5 h-3.5 ml-1 text-slate-400" />
+                  Close Time <Info className="w-3.5 h-3.5 ml-1 text-slate-400 cursor-help" title="Format: DD:HH:MM:SS" />
                 </div>
               </th>
               <th className="p-4 pr-5">Status</th>
