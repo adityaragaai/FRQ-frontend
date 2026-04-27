@@ -106,13 +106,13 @@ function App() {
 
   return (
     <>
-      {showSplash && <SplashScreen onDone={handleSplashDone} />}
+      {showSplash && <SplashScreen onDone={handleSplashDone} loading={loading} />}
       <div
         className="flex flex-col h-screen overflow-hidden bg-[#F8FAFC] font-sans p-2 sm:p-4 md:p-6 gap-3 sm:gap-4 md:gap-6"
         style={{
           opacity: showSplash ? 0 : 1,
           transform: showSplash ? 'translateY(12px)' : 'translateY(0)',
-          transition: 'opacity 0.5s ease 0.05s, transform 0.5s ease 0.05s',
+          transition: 'opacity 0.6s ease 0.1s, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s',
         }}
       >
 
@@ -162,7 +162,7 @@ function App() {
           <main className="flex-1 overflow-y-auto custom-scrollbar rounded-[28px] md:rounded-[32px] bg-white border border-slate-100 shadow-sm p-3 sm:p-5 md:p-8 min-w-0">
             <div id="dashboard-top" className="max-w-[1600px] mx-auto space-y-4 md:space-y-6">
 
-              <DashboardStats rfqs={rfqs} />
+              <DashboardStats rfqs={rfqs} loading={loading} />
 
               <div className="flex flex-col xl:flex-row gap-4 md:gap-6">
 
@@ -171,6 +171,7 @@ function App() {
                     auctions={rfqs}
                     activeId={activeAuction?._id}
                     onSelectAuction={handleSelectAuction}
+                    loading={loading}
                   />
 
                   {activeAuction && (

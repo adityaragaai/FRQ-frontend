@@ -2,23 +2,30 @@ import React, { useEffect, useState } from 'react';
 
 /**
  * SplashScreen – plays once on app open.
- * Phases:
- *  0 → logo animates in  (0–600 ms)
- *  1 → subtitle fades in (600–1 100 ms)
- *  2 → pulse ring        (1 100–1 800 ms)
- *  3 → whole screen fades out (1 800–2 300 ms)
- *  done → unmounts
+ * Now waits for loading prop to be false before completing.
  */
-export default function SplashScreen({ onDone }) {
+export default function SplashScreen({ onDone, loading }) {
   const [phase, setPhase] = useState(0);
+  const [minTimeElapsed, setMinTimeElapsed] = useState(false);
 
   useEffect(() => {
     const t1 = setTimeout(() => setPhase(1), 600);
     const t2 = setTimeout(() => setPhase(2), 1100);
-    const t3 = setTimeout(() => setPhase(3), 1800);
-    const t4 = setTimeout(() => onDone(), 2350);
-    return () => [t1, t2, t3, t4].forEach(clearTimeout);
-  }, [onDone]);
+    const t3 = setTimeout(() => {
+      setPhase(3);
+      setMinTimeElapsed(true);
+    }, 1800);
+    
+    return () => [t1, t2, t3].forEach(clearTimeout);
+  }, []);
+
+  useEffect(() => {
+    // Only call onDone if phase 3 is reached (animations done) AND data is no longer loading
+    if (minTimeElapsed && !loading) {
+      const t4 = setTimeout(() => onDone(), 500);
+      return () => clearTimeout(t4);
+    }
+  }, [minTimeElapsed, loading, onDone]);
 
   return (
     <div
@@ -31,8 +38,8 @@ export default function SplashScreen({ onDone }) {
         alignItems: 'center',
         justifyContent: 'center',
         background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 60%, #0F172A 100%)',
-        opacity: phase === 3 ? 0 : 1,
-        transition: phase === 3 ? 'opacity 0.5s ease' : 'none',
+        opacity: (minTimeElapsed && !loading) ? 0 : 1,
+        transition: (minTimeElapsed && !loading) ? 'opacity 0.6s ease' : 'none',
         pointerEvents: 'none',
         userSelect: 'none',
       }}
@@ -86,7 +93,6 @@ export default function SplashScreen({ onDone }) {
         transform: phase >= 0 ? 'scale(1) translateY(0)' : 'scale(0.6) translateY(20px)',
         transition: 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1)',
       }}>
-        {/* Hamburger lines as brand icon */}
         <svg width="34" height="28" viewBox="0 0 34 28" fill="none">
           <rect x="0" y="0"  width="20" height="4" rx="2" fill="white" opacity="0.9"/>
           <rect x="0" y="12" width="34" height="4" rx="2" fill="white"/>
@@ -94,7 +100,7 @@ export default function SplashScreen({ onDone }) {
         </svg>
       </div>
 
-      {/* Brand name – letter-by-letter stagger */}
+      {/* Brand name */}
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
         {['R','F','Q'].map((ch, i) => (
           <span
@@ -147,7 +153,7 @@ export default function SplashScreen({ onDone }) {
         transform: phase >= 1 ? 'translateY(0)' : 'translateY(10px)',
         transition: 'opacity 0.5s ease, transform 0.5s ease',
       }}>
-        Real-Time Auction Platform
+        {loading ? 'Initializing Data Stream...' : 'Real-Time Auction Platform'}
       </p>
 
       {/* Thin progress bar */}
@@ -158,8 +164,8 @@ export default function SplashScreen({ onDone }) {
         height: 3,
         background: 'linear-gradient(90deg, #3B82F6, #6366F1)',
         borderRadius: '0 2px 2px 0',
-        width: phase === 3 ? '100%' : phase === 2 ? '85%' : phase === 1 ? '55%' : '20%',
-        transition: 'width 0.6s ease',
+        width: !loading ? '100%' : minTimeElapsed ? '90%' : phase === 2 ? '85%' : phase === 1 ? '55%' : '20%',
+        transition: 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
       }} />
     </div>
   );
