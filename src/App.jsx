@@ -112,7 +112,7 @@ function App() {
         style={{
           opacity: showSplash ? 0 : 1,
           transform: showSplash ? 'translateY(12px)' : 'translateY(0)',
-          transition: 'opacity 0.6s ease 0.1s, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s',
+          transition: 'opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
         }}
       >
 

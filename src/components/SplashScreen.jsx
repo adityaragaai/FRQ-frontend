@@ -9,23 +9,24 @@ export default function SplashScreen({ onDone, loading }) {
   const [minTimeElapsed, setMinTimeElapsed] = useState(false);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase(1), 600);
-    const t2 = setTimeout(() => setPhase(2), 1100);
+    const t1 = setTimeout(() => setPhase(1), 300);
+    const t2 = setTimeout(() => setPhase(2), 600);
     const t3 = setTimeout(() => {
       setPhase(3);
       setMinTimeElapsed(true);
-    }, 1800);
+    }, 1000);
     
     return () => [t1, t2, t3].forEach(clearTimeout);
   }, []);
 
   useEffect(() => {
-    // Only call onDone if phase 3 is reached (animations done) AND data is no longer loading
-    if (minTimeElapsed && !loading) {
-      const t4 = setTimeout(() => onDone(), 500);
+    // Only call onDone if phase 3 is reached (animations done)
+    // We no longer wait for 'loading' to be false, allowing skeletons to show instead
+    if (minTimeElapsed) {
+      const t4 = setTimeout(() => onDone(), 150);
       return () => clearTimeout(t4);
     }
-  }, [minTimeElapsed, loading, onDone]);
+  }, [minTimeElapsed, onDone]);
 
   return (
     <div
@@ -38,8 +39,8 @@ export default function SplashScreen({ onDone, loading }) {
         alignItems: 'center',
         justifyContent: 'center',
         background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 60%, #0F172A 100%)',
-        opacity: (minTimeElapsed && !loading) ? 0 : 1,
-        transition: (minTimeElapsed && !loading) ? 'opacity 0.6s ease' : 'none',
+        opacity: minTimeElapsed ? 0 : 1,
+        transition: minTimeElapsed ? 'opacity 0.4s ease' : 'none',
         pointerEvents: 'none',
         userSelect: 'none',
       }}
